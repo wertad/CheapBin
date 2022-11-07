@@ -10,12 +10,10 @@
 
 <div class="control">
     <input class="form-control" size="82" @bind-value="searchText" @bind-value:event="oninput" placeholder="Search..." />
-    <button type="submit" class="btn btn-primary">New snippet</button>
+    <button type="submit" class="btn btn-dark" @onclick="@(()=> _nav.NavigateTo("/new"))">New snippet</button>
 </div>
 
 <hr />
-
-
 
 @if(snippets is null)
 {

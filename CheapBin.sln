@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheapBin", "CheapBin\CheapBin.csproj", "{7415A8B9-4982-4C87-80E5-48AF2021FA47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheapBin", "CheapBin\CheapBin.csproj", "{7415A8B9-4982-4C87-80E5-48AF2021FA47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLibrary", "DataAccessLibrary\DataAccessLibrary.csproj", "{22D19B42-F7BA-4856-8BA7-A29867168529}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLibrary", "DataAccessLibrary\DataAccessLibrary.csproj", "{22D19B42-F7BA-4856-8BA7-A29867168529}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
