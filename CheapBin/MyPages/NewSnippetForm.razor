@@ -2,6 +2,36 @@
 
 <h3>NewSnippetForm</h3>
 
-@code {
+<input class="title" @oninput="HandleOnChange_Title" value="@titleText" placeholder="Untitle" />
+<textarea id="snippetTextbox" class="form-control" @oninput="HandleOnChange_Snippet" value="@textboxText"/>
+<div class="buttons">
+    <button class="btn btn-success" @onclick="Save">Save</button>
+    <button class="btn btn-warning">Discard</button>
+</div>
 
+
+@code {
+    private string? textboxText;
+    private string? titleText;
+
+    // Ez alapján kell majd betölteni a textboxba a db-ből
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    textboxText = "Onload string";
+    //}
+
+    private async Task HandleOnChange_Snippet(ChangeEventArgs args)
+    {
+        textboxText = args.Value.ToString();
+    }
+
+    private async Task HandleOnChange_Title(ChangeEventArgs args)
+    {
+        titleText = args.Value.ToString();
+    }
+
+    protected async Task Save()
+    {
+        Console.WriteLine($"{titleText}\n {textboxText}\n");
+    }
 }

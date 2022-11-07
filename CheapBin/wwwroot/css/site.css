@@ -4,6 +4,28 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+.title {
+    background-color: #cdcdcd;
+    border-radius: 0.25rem;
+    margin: 20px 0;
+    width: 30%;
+}
+
+.title:focus {
+    background-color: #fff;
+}
+
+textarea.form-control {
+    height: 400px;
+    margin: 0px;
+    resize: both;
+    background-color: #cdcdcd;
+}
+
+.buttons {
+    margin: 20px 5px 20px 0;
+}
+
 .control input {
     width: 40%;
     display: block;
