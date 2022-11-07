@@ -1,0 +1,58 @@
+﻿@page "/SnippetList"
+
+@using DataAccessLibrary
+@using DataAccessLibrary.Models
+
+@inject ISnippetData _db
+@inject NavigationManager _nav
+
+<h1>SnippetList</h1>
+
+<div class="control">
+    <input class="form-control" size="82" @bind-value="searchText" @bind-value:event="oninput" placeholder="Search..." />
+    <button type="submit" class="btn btn-primary">New snippet</button>
+</div>
+
+<hr />
+
+
+
+@if(snippets is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table style="width:100%" class="table table-dark table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Creating Time</th>
+                <th>Last Modify Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var snippet in filteredSnippets)
+            {
+                <tr>
+                    <td style="width:50%">@snippet.Title</td>
+                    <td>@snippet.CreatedTime</td>
+                    <td>@snippet.ModifyTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<SnippetModel> snippets;
+    private string searchText = "";
+    private List<SnippetModel> filteredSnippets =>
+        snippets.Where(s =>
+            s.Title.ToLower().Contains(searchText.ToLower())).ToList();
+
+    protected override async Task OnInitializedAsync()
+    {
+        snippets = await _db.GetSnippet();
+    }
+}
