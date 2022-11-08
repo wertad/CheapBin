@@ -7,5 +7,6 @@ namespace DataAccessLibrary
         Task DeleteSnippet(SnippetModel snippet);
         Task<List<SnippetModel>> GetSnippet();
         Task InsertSnippet(SnippetModel snippet);
+        Task UpdateSnippet(SnippetModel snippet);
     }
 }

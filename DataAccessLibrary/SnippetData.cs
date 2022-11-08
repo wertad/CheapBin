@@ -31,7 +31,17 @@ public class SnippetData : ISnippetData
 		return _db.SaveData(sql, snippet);
 	}
 
-	public Task DeleteSnippet(SnippetModel snippet)
+    public Task UpdateSnippet(SnippetModel snippet)
+    {
+        string sql = @"UPDATE dbo.Snippets
+					   SET Title = @Title, Snippet = @Snippet
+					   WHERE Id = @Id;";
+
+        return _db.SaveData(sql, snippet);
+    }
+
+
+    public Task DeleteSnippet(SnippetModel snippet)
 	{
 		string sql = @"DELETE FROM dbo.Snippets WHERE Id=@Id";
 

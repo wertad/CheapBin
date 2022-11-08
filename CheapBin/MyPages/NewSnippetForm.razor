@@ -1,6 +1,5 @@
 ﻿@page "/new"
 
-@using CheapBin.Models
 @using DataAccessLibrary
 @using DataAccessLibrary.Models
 
@@ -17,9 +16,7 @@
 
 
 @code {
-    private string? textboxText;
-    private string? titleText;
-    private DisplaySnippetModel newSnippet = new();
+    private SnippetModel newSnippet = new();
 
     // Ez alapján kell majd betölteni a textboxba a db-ből
     //protected override async Task OnInitializedAsync()
@@ -27,30 +24,26 @@
     //    textboxText = "Onload string";
     //}
 
-    private async Task HandleOnChange_Snippet(ChangeEventArgs args)
+    private void HandleOnChange_Snippet(ChangeEventArgs args)
     {
         newSnippet.Snippet = args.Value.ToString();
     }
 
-    private async Task HandleOnChange_Title(ChangeEventArgs args)
+    private void HandleOnChange_Title(ChangeEventArgs args)
     {
         newSnippet.Title = args.Value.ToString();
     }
 
     protected async Task Save()
     {
-        Console.WriteLine($"{titleText}\n {textboxText}\n");
-
         SnippetModel s = new()
         {
             Title = newSnippet.Title,
             Snippet = newSnippet.Snippet
         };
 
-        //Console.WriteLine(s.Title + s.Snippet);
-
         await _db.InsertSnippet(s);
 
-        newSnippet = new DisplaySnippetModel();
+        newSnippet = new SnippetModel();
     }
 }

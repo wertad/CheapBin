@@ -22,6 +22,20 @@ textarea.form-control {
     background-color: #cdcdcd;
 }
 
+.btn-light:hover {
+    background-color: red;
+    color: white;
+}
+
+tr:hover {
+    font-weight: 900;
+    cursor: default;
+}
+
+.td:checked {
+    background-color: burlywood;
+}
+
 .buttons {
     margin: 20px 5px 20px 0;
 }
@@ -30,6 +44,10 @@ textarea.form-control {
     width: 40%;
     display: block;
     margin: 0 auto;
+}
+
+.control button:hover {
+    background-color: green;
 }
 
 h1:focus {

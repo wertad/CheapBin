@@ -1,0 +1,72 @@
+﻿@page "/edit"
+@page "/edit/{id}"
+
+@using DataAccessLibrary
+@using DataAccessLibrary.Models
+
+@inject ISnippetData _db
+
+<h3>@currentSnippet.Id EditSnippetForm</h3>
+
+
+
+<input class="title" @oninput="HandleOnChange_Title" value="@currentSnippet.Title" placeholder="Untitle" />
+
+<textarea id="snippetTextbox" class="form-control" @oninput="HandleOnChange_Snippet" value="@currentSnippet.Snippet"/>
+
+<div class="buttons">
+    <button class="btn btn-success" @onclick="Save">Save</button>
+    <button class="btn btn-warning">Discard</button>
+</div>
+
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    private List<SnippetModel> snippets;
+
+    //TODO: kérdéses, hogy az egész DisplaySnippetModel-nek van-e létjogosultsága?!
+    private SnippetModel currentSnippet = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        snippets = await _db.GetSnippet();
+        currentSnippet.Id = Convert.ToInt32(Id);
+
+        //TODO: inkább meg kéne kapnia biztonságos úton a navigáció során paraméterként az objektumot
+        //minthogy itt foreach-elni/keresgélni megint
+        //de most egyelőre teszteljünk így...
+        foreach (var current in snippets)
+        {
+            if (current.Id == currentSnippet.Id)
+            {
+                currentSnippet = current;
+                break;
+            }
+        }
+
+        Console.WriteLine();
+
+        //textboxText = "Onload string";
+    }
+
+    private void HandleOnChange_Snippet(ChangeEventArgs args)
+    {
+        currentSnippet.Snippet = args.Value.ToString();
+    }
+
+    private void HandleOnChange_Title(ChangeEventArgs args)
+    {
+        currentSnippet.Title = args.Value.ToString();
+    }
+
+    protected async Task Save()
+    {
+        await _db.UpdateSnippet(currentSnippet);
+
+        currentSnippet = new SnippetModel();
+    }
+}
+

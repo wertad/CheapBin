@@ -27,15 +27,17 @@ else
                 <th>Title</th>
                 <th>Creating Time</th>
                 <th>Last Modify Time</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var snippet in filteredSnippets)
             {
                 <tr>
-                    <td style="width:50%">@snippet.Title</td>
-                    <td>@snippet.CreatedTime</td>
-                    <td>@snippet.ModifyTime</td>
+                    <td @ondblclick="@(()=> _nav.NavigateTo("/edit" + "/" + snippet.Id))" style="width:50%">@snippet.Title</td>
+                    <td style="width:15%">@snippet.CreatedTime</td>
+                    <td style="width:15%">@snippet.ModifyTime</td>
+                    <td><button type="submit" class="btn btn-light" @onclick="() => DeleteSnippet(snippet)">Delete</button></td>
                 </tr>
             }
         </tbody>
@@ -52,5 +54,12 @@ else
     protected override async Task OnInitializedAsync()
     {
         snippets = await _db.GetSnippet();
+    }
+
+    protected async Task DeleteSnippet(SnippetModel snippet)
+    {
+        await _db.DeleteSnippet(snippet);
+
+        snippets.RemoveAll(s => s.Id == snippet.Id);
     }
 }
