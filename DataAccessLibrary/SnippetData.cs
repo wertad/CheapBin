@@ -26,7 +26,7 @@ public class SnippetData : ISnippetData
 	public Task InsertSnippet(SnippetModel snippet)
 	{
 		string sql = @"INSERT INTO dbo.Snippets (Title, Snippet)
-					   VALUES (@Title, Snippet);";
+					   VALUES (@Title, @Snippet);";
 
 		return _db.SaveData(sql, snippet);
 	}
