@@ -37,7 +37,10 @@ else
                     <td @ondblclick="@(()=> _nav.NavigateTo("/edit" + "/" + snippet.Id))" style="width:50%">@snippet.Title</td>
                     <td style="width:15%">@snippet.CreatedTime</td>
                     <td style="width:15%">@snippet.ModifyTime</td>
-                    <td><button type="submit" class="btn btn-light" @onclick="() => DeleteSnippet(snippet)">Delete</button></td>
+                    <td>
+                        <button type="submit" class="btn btn-light ctr-btn ctr-btn-edit" @onclick="@(() => _nav.NavigateTo("/edit" + "/" + snippet.Id))">Edit</button>
+                        <button type="submit" class="btn btn-light ctr-btn ctr-btn-delete" @onclick="() => DeleteSnippet(snippet)">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -56,6 +59,7 @@ else
         snippets = await _db.GetSnippet();
     }
 
+    //TODO: are you sure? implementálása.
     protected async Task DeleteSnippet(SnippetModel snippet)
     {
         await _db.DeleteSnippet(snippet);

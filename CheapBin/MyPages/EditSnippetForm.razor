@@ -5,6 +5,7 @@
 @using DataAccessLibrary.Models
 
 @inject ISnippetData _db
+@inject NavigationManager _nav
 
 <h3>@currentSnippet.Id EditSnippetForm</h3>
 
@@ -16,7 +17,8 @@
 
 <div class="buttons">
     <button class="btn btn-success" @onclick="Save">Save</button>
-    <button class="btn btn-warning">Discard</button>
+    <button class="btn btn-warning" @onclick="@(() => _nav.NavigateTo(@"/SnippetList"))">Cancel</button>
+    <button class="btn btn-danger mx-4" @onclick="Delete">Delete</button>
 </div>
 
 
@@ -26,7 +28,6 @@
 
     private List<SnippetModel> snippets;
 
-    //TODO: kérdéses, hogy az egész DisplaySnippetModel-nek van-e létjogosultsága?!
     private SnippetModel currentSnippet = new();
 
 
@@ -64,9 +65,22 @@
 
     protected async Task Save()
     {
+        currentSnippet.ModifyTime = DateTime.Now;
+
         await _db.UpdateSnippet(currentSnippet);
 
         currentSnippet = new SnippetModel();
+
+        _nav.NavigateTo("/SnippetList");
+    }
+
+    protected async Task Delete()
+    {
+        await _db.DeleteSnippet(currentSnippet);
+
+        currentSnippet = new SnippetModel();
+
+        _nav.NavigateTo("/SnippetList");
     }
 }
 

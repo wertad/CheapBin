@@ -12,6 +12,8 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<ISnippetData, SnippetData>();
 
+//builder.WebHost.UseUrls("https://192.168.0.19:7190");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

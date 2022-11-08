@@ -22,9 +22,18 @@ textarea.form-control {
     background-color: #cdcdcd;
 }
 
-.btn-light:hover {
+.ctr-btn {
+    margin: 0 5px;
+}
+
+.ctr-btn-delete:hover {
     background-color: red;
     color: white;
+}
+
+.ctr-btn-edit:hover {
+    background-color: #1b6ec2;
+    color: #fff;
 }
 
 tr:hover {

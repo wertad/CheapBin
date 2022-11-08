@@ -25,8 +25,8 @@ public class SnippetData : ISnippetData
 
 	public Task InsertSnippet(SnippetModel snippet)
 	{
-		string sql = @"INSERT INTO dbo.Snippets (Title, Snippet)
-					   VALUES (@Title, @Snippet);";
+		string sql = @"INSERT INTO dbo.Snippets (Title, Snippet, CreatedTime, ModifyTime)
+					   VALUES (@Title, @Snippet, @CreatedTime, @ModifyTime);";
 
 		return _db.SaveData(sql, snippet);
 	}
@@ -34,7 +34,7 @@ public class SnippetData : ISnippetData
     public Task UpdateSnippet(SnippetModel snippet)
     {
         string sql = @"UPDATE dbo.Snippets
-					   SET Title = @Title, Snippet = @Snippet
+					   SET Title = @Title, Snippet = @Snippet, ModifyTime = @ModifyTime
 					   WHERE Id = @Id;";
 
         return _db.SaveData(sql, snippet);

@@ -4,6 +4,7 @@
 @using DataAccessLibrary.Models
 
 @inject ISnippetData _db
+@inject NavigationManager _nav
 
 <h3>NewSnippetForm</h3>
 
@@ -39,11 +40,15 @@
         SnippetModel s = new()
         {
             Title = newSnippet.Title,
-            Snippet = newSnippet.Snippet
+            Snippet = newSnippet.Snippet,
+            CreatedTime = DateTime.Now,
+            ModifyTime = DateTime.Now
         };
 
         await _db.InsertSnippet(s);
 
         newSnippet = new SnippetModel();
+
+        _nav.NavigateTo("/SnippetList");
     }
 }
