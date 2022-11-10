@@ -1,9 +1,14 @@
 ﻿@page "/"
 
+@inject NavigationManager _nav
+
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        // később még lehet bővül a program fő- és további oldalakkal is,
+        // így felkészítve erre most csak irányítsa tovább a listára
+        _nav.NavigateTo("/SnippetList");
+    }
+}
