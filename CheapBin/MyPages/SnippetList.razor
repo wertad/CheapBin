@@ -57,8 +57,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        snippets = await _db.GetSnippet();
-        snippets = snippets.OrderByDescending(x => x.CreatedTime).ToList();
+        snippets = (await _db.GetSnippet()).OrderByDescending(x => x.CreatedTime).ToList();
 
         asc.Add("Title", true);
         asc.Add("Created", true);
