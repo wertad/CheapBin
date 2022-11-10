@@ -24,9 +24,9 @@ else
     <table style="width:100%" class="table table-dark table-striped table-hover">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Creating Time</th>
-                <th>Last Modify Time</th>
+                <th @onclick="@(() => SortList("Title"))">Title</th>
+                <th @onclick="@(() => SortList("Created"))">Created</th>
+                <th @onclick="@(() => SortList("Modify"))">Last Modify</th>
                 <th></th>
             </tr>
         </thead>
@@ -48,6 +48,7 @@ else
 }
 
 @code {
+    private Dictionary<string, bool> asc = new();
     private List<SnippetModel> snippets;
     private string searchText = "";
     private List<SnippetModel> filteredSnippets =>
@@ -57,6 +58,11 @@ else
     protected override async Task OnInitializedAsync()
     {
         snippets = await _db.GetSnippet();
+        snippets = snippets.OrderByDescending(x => x.CreatedTime).ToList();
+
+        asc.Add("Title", true);
+        asc.Add("Created", true);
+        asc.Add("Modify", true);
     }
 
     //TODO: are you sure? implementálása.
@@ -65,5 +71,66 @@ else
         await _db.DeleteSnippet(snippet);
 
         snippets.RemoveAll(s => s.Id == snippet.Id);
+    }
+
+    //TODO: stringről enumra átírni
+    //TODO: nagyon hard-codeolt így a switch
+    //TODO: ordering direction mark to header
+    //TODO: szerkesztés után meg kéne tartani a szűrést, elmenteni az állapotot
+    protected void SortList(string column)
+    {
+        switch (column)
+        {
+            case "Title":
+                if (asc["Title"])
+                {
+                    snippets.Sort((s1, s2) => s1.Title.CompareTo(s2.Title));
+                    asc["Title"] = !asc["Title"];
+                    asc["Created"] = true;
+                    asc["Modify"] = true;
+                }
+                else
+                {
+                    snippets.Sort((s1, s2) => s2.Title.CompareTo(s1.Title));
+                    asc["Title"] = !asc["Title"];
+                    asc["Created"] = true;
+                    asc["Modify"] = true;
+                }
+                break;
+            case "Created":
+                if (asc["Created"])
+                {
+                    snippets.Sort((s1, s2) => s1.CreatedTime.CompareTo(s2.CreatedTime));
+                    asc["Title"] = true;
+                    asc["Created"] = !asc["Created"];
+                    asc["Modify"] = true;
+                }
+                else
+                {
+                    snippets.Sort((s1, s2) => s2.CreatedTime.CompareTo(s1.CreatedTime));
+                    asc["Title"] = true;
+                    asc["Created"] = !asc["Created"];
+                    asc["Modify"] = true;
+                }
+                break;
+            case "Modify":
+                if (asc["Modify"])
+                {
+                    snippets.Sort((s1, s2) => s1.ModifyTime.CompareTo(s2.ModifyTime));
+                    asc["Title"] = true;
+                    asc["Created"] = true;
+                    asc["Modify"] = !asc["Modify"];
+                }
+                else
+                {
+                    snippets.Sort((s1, s2) => s2.ModifyTime.CompareTo(s1.ModifyTime));
+                    asc["Title"] = true;
+                    asc["Created"] = true;
+                    asc["Modify"] = !asc["Modify"];
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
