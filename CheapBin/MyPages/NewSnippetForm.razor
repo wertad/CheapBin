@@ -6,24 +6,23 @@
 @inject ISnippetData _db
 @inject NavigationManager _nav
 
-<h3>NewSnippetForm</h3>
+<h1>@newSnippet.Title</h1>
 
 <input class="title" @oninput="HandleOnChange_Title" value="@newSnippet.Title" placeholder="Untitle" />
 <textarea id="snippetTextbox" class="form-control" @oninput="HandleOnChange_Snippet" value="@newSnippet.Snippet"/>
 <div class="buttons">
     <button class="btn btn-success" @onclick="Save">Save</button>
-    <button class="btn btn-warning">Discard</button>
+    <button class="btn btn-warning" @onclick="NavigateBack">Discard</button>
 </div>
 
 
 @code {
     private SnippetModel newSnippet = new();
 
-    // Ez alapján kell majd betölteni a textboxba a db-ből
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    textboxText = "Onload string";
-    //}
+    protected override async Task OnInitializedAsync()
+    {
+        newSnippet.Title = "Untitle";
+    }
 
     private void HandleOnChange_Snippet(ChangeEventArgs args)
     {
@@ -49,6 +48,11 @@
 
         newSnippet = new SnippetModel();
 
+        _nav.NavigateTo("/SnippetList");
+    }
+
+    protected void NavigateBack()
+    {
         _nav.NavigateTo("/SnippetList");
     }
 }

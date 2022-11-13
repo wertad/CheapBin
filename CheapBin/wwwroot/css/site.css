@@ -4,6 +4,10 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+h1 {
+    font-family: fantasy;
+}
+
 .title {
     background-color: #cdcdcd;
     border-radius: 0.25rem;
@@ -16,7 +20,7 @@ html, body {
 }
 
 textarea.form-control {
-    height: 400px;
+    height: 700px;
     margin: 0px;
     resize: both;
     background-color: #cdcdcd;
