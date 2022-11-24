@@ -26,7 +26,7 @@ else
             <tr>
                 <th @onclick="@(() => SortList("Title"))">Title</th>
                 <th @onclick="@(() => SortList("Created"))">Created</th>
-                <th @onclick="@(() => SortList("Modify"))">Last Modify</th>
+                <th @onclick="@(() => SortList("Modify"))">Last Modified</th>
                 <th></th>
             </tr>
         </thead>
@@ -51,8 +51,11 @@ else
     private Dictionary<string, bool> asc = new();
     private List<SnippetModel> snippets;
     private string searchText = "";
+
+    //Regex ha searchText első karaktere ! , akkor not contains
+
     private List<SnippetModel> filteredSnippets =>
-        snippets.Where(s =>
+    snippets.Where(s =>
             s.Title.ToLower().Contains(searchText.ToLower())).ToList();
 
     protected override async Task OnInitializedAsync()

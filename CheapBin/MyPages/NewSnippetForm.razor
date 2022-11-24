@@ -9,7 +9,7 @@
 <h1>@newSnippet.Title</h1>
 
 <input class="title" @oninput="HandleOnChange_Title" value="@newSnippet.Title" placeholder="Untitle" />
-<textarea id="snippetTextbox" class="form-control" @oninput="HandleOnChange_Snippet" value="@newSnippet.Snippet"/>
+<textarea id="snippetTextbox" class="form-control" @oninput="HandleChange_Snippet" value="@newSnippet.Snippet"/>
 <div class="buttons">
     <button class="btn btn-success" @onclick="Save">Save</button>
     <button class="btn btn-warning" @onclick="NavigateBack">Discard</button>
@@ -21,10 +21,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        newSnippet.Title = "Untitle";
+        newSnippet.Title = "Untitled";
     }
 
-    private void HandleOnChange_Snippet(ChangeEventArgs args)
+    //TODO: StringBuilder-t kéne használni string helyett a teljesítmény növelése végett.
+    private void HandleChange_Snippet(ChangeEventArgs args)
     {
         newSnippet.Snippet = args.Value.ToString();
     }
@@ -48,7 +49,7 @@
 
         newSnippet = new SnippetModel();
 
-        _nav.NavigateTo("/SnippetList");
+        NavigateBack();
     }
 
     protected void NavigateBack()
