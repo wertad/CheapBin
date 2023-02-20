@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ public class SqlDataAccess : ISqlDataAccess
     {
         string connectionString = _config.GetConnectionString(ConnectionStringName);
 
-        using (IDbConnection connection = new SqlConnection(connectionString))
+        using (IDbConnection connection = new MySqlConnection(connectionString))
         {
             var data = await connection.QueryAsync<T>(sql, parameters);
 
@@ -37,7 +37,7 @@ public class SqlDataAccess : ISqlDataAccess
     {
         string connectionString = _config.GetConnectionString(ConnectionStringName);
 
-        using (IDbConnection connection = new SqlConnection(connectionString))
+        using (IDbConnection connection = new MySqlConnection(connectionString))
         {
             await connection.ExecuteAsync(sql, parameters);
         }

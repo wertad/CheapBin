@@ -1,37 +1,59 @@
 ﻿@page "/new"
 
-<h3>NewSnippetForm</h3>
+@using DataAccessLibrary
+@using DataAccessLibrary.Models
 
-<input class="title" @oninput="HandleOnChange_Title" value="@titleText" placeholder="Untitle" />
-<textarea id="snippetTextbox" class="form-control" @oninput="HandleOnChange_Snippet" value="@textboxText"/>
+@inject ISnippetData _db
+@inject NavigationManager _nav
+
+<h1>@newSnippet.Title</h1>
+
+<input class="title" @oninput="HandleOnChange_Title" value="@newSnippet.Title" placeholder="Untitle" />
+<textarea id="snippetTextbox" class="form-control" @oninput="HandleChange_Snippet" value="@newSnippet.Snippet"/>
 <div class="buttons">
     <button class="btn btn-success" @onclick="Save">Save</button>
-    <button class="btn btn-warning">Discard</button>
+    <button class="btn btn-warning" @onclick="NavigateBack">Discard</button>
 </div>
 
 
 @code {
-    private string? textboxText;
-    private string? titleText;
+    private SnippetModel newSnippet = new();
 
-    // Ez alapján kell majd betölteni a textboxba a db-ből
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    textboxText = "Onload string";
-    //}
-
-    private async Task HandleOnChange_Snippet(ChangeEventArgs args)
+    protected override async Task OnInitializedAsync()
     {
-        textboxText = args.Value.ToString();
+        newSnippet.Title = "Untitled";
     }
 
-    private async Task HandleOnChange_Title(ChangeEventArgs args)
+    //TODO: StringBuilder-t kéne használni string helyett a teljesítmény növelése végett.
+    private void HandleChange_Snippet(ChangeEventArgs args)
     {
-        titleText = args.Value.ToString();
+        newSnippet.Snippet = args.Value.ToString();
+    }
+
+    private void HandleOnChange_Title(ChangeEventArgs args)
+    {
+        newSnippet.Title = args.Value.ToString();
     }
 
     protected async Task Save()
     {
-        Console.WriteLine($"{titleText}\n {textboxText}\n");
+        SnippetModel s = new()
+        {
+            Title = newSnippet.Title,
+            Snippet = newSnippet.Snippet,
+            CreatedTime = DateTime.Now,
+            ModifyTime = DateTime.Now
+        };
+
+        await _db.InsertSnippet(s);
+
+        newSnippet = new SnippetModel();
+
+        NavigateBack();
+    }
+
+    protected void NavigateBack()
+    {
+        _nav.NavigateTo("/SnippetList");
     }
 }

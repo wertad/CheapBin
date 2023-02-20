@@ -18,22 +18,32 @@ public class SnippetData : ISnippetData
 
 	public Task<List<SnippetModel>> GetSnippet()
 	{
-		string sql = "SELECT * FROM dbo.Snippets";
+		string sql = "SELECT * FROM Snippets";
 
 		return _db.LoadData<SnippetModel, dynamic>(sql, new { });
 	}
 
 	public Task InsertSnippet(SnippetModel snippet)
 	{
-		string sql = @"INSERT INTO dbo.Snippets (Title, Snippet)
-					   VALUES (@Title, Snippet);";
+		string sql = @"INSERT INTO Snippets (Title, Snippet, CreatedTime, ModifyTime)
+					   VALUES (@Title, @Snippet, @CreatedTime, @ModifyTime);";
 
 		return _db.SaveData(sql, snippet);
 	}
 
-	public Task DeleteSnippet(SnippetModel snippet)
+    public Task UpdateSnippet(SnippetModel snippet)
+    {
+        string sql = @"UPDATE Snippets
+					   SET Title = @Title, Snippet = @Snippet, ModifyTime = @ModifyTime
+					   WHERE Id = @Id;";
+
+        return _db.SaveData(sql, snippet);
+    }
+
+
+    public Task DeleteSnippet(SnippetModel snippet)
 	{
-		string sql = @"DELETE FROM dbo.Snippets WHERE Id=@Id";
+		string sql = @"DELETE FROM Snippets WHERE Id=@Id";
 
 		return _db.SaveData(sql, snippet);
 	}
