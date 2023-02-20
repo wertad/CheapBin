@@ -38,7 +38,7 @@ else
                     <td style="width:15%">@snippet.CreatedTime</td>
                     <td style="width:15%">@snippet.ModifyTime</td>
                     <td>
-                        <button type="submit" class="btn btn-light ctr-btn ctr-btn-edit" @onclick="@(() => _nav.NavigateTo("/edit" + "/" + snippet.Id))">Edit</button>
+                        <button type="submit" class="btn btn-light ctr-btn ctr-btn-edit" @onclick="@(() => _nav.NavigateTo("/edit" + "/" + snippet.Id))">Open</button>
                         <button type="submit" class="btn btn-light ctr-btn ctr-btn-delete" @onclick="() => DeleteSnippet(snippet)">Delete</button>
                     </td>
                 </tr>

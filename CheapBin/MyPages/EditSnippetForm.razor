@@ -1,5 +1,4 @@
-﻿@page "/edit"
-@page "/edit/{id}"
+﻿@page "/edit/{id}"
 
 @using DataAccessLibrary
 @using DataAccessLibrary.Models
@@ -17,7 +16,7 @@
 
 <div class="buttons">
     <button class="btn btn-success" @onclick="Save">Save</button>
-    <button class="btn btn-warning" @onclick="@(() => _nav.NavigateTo(@"/SnippetList"))">Cancel</button>
+    <button class="btn btn-warning" @onclick="Cancel">Cancel</button>
     <button class="btn btn-danger mx-4" @onclick="Delete">Delete</button>
 </div>
 
@@ -80,6 +79,11 @@
 
         currentSnippet = new SnippetModel();
 
+        _nav.NavigateTo("/SnippetList");
+    }
+
+    protected async Task Cancel()
+    {
         _nav.NavigateTo("/SnippetList");
     }
 }
